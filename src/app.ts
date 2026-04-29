@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import healthRoutes from './modules/health/health.routes';
+import instrumentRoutes from './modules/instruments/instrument.routes';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get('/', (_req, res) => {
 });
 
 app.use('/api/health', healthRoutes);
+app.use('/api/instruments', instrumentRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({

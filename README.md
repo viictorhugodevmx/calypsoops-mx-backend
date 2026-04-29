@@ -138,3 +138,31 @@ Request:
 ```txt
 GET Health Check
 ```
+
+## Paso 2 - Instruments
+
+Módulo para simular instrumentos de deuda mexicana usados en Mercado de Dinero / Mercado de Deuda.
+
+### Endpoints
+
+```http
+POST /api/instruments/seed/run
+GET /api/instruments
+GET /api/instruments/:id
+```
+
+### Filtros disponibles
+
+```http
+GET /api/instruments?type=CETES
+GET /api/instruments?status=ACTIVE
+GET /api/instruments?search=bono
+```
+
+### Instrumentos simulados
+
+- CETES
+- BONOS M
+- UDIBONOS
+- BONDES F
+- BPAs
