@@ -4,6 +4,7 @@ import morgan from 'morgan';
 
 import healthRoutes from './modules/health/health.routes';
 import instrumentRoutes from './modules/instruments/instrument.routes';
+import tradeRoutes from './modules/trades/trade.routes';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/', (_req, res) => {
 
 app.use('/api/health', healthRoutes);
 app.use('/api/instruments', instrumentRoutes);
+app.use('/api/trades', tradeRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({

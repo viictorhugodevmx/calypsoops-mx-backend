@@ -166,3 +166,39 @@ GET /api/instruments?search=bono
 - UDIBONOS
 - BONDES F
 - BPAs
+
+## Paso 3 - Trades
+
+Módulo para simular operaciones financieras realizadas sobre instrumentos de deuda mexicana.
+
+### Endpoints
+
+```http
+POST /api/trades/seed/run
+GET /api/trades
+GET /api/trades/:id
+PATCH /api/trades/:id/status
+```
+
+### Filtros disponibles
+
+```http
+GET /api/trades?status=SETTLED
+GET /api/trades?type=REPO
+GET /api/trades?counterparty=Banco
+GET /api/trades?search=Repo
+```
+
+### Tipos de operación simulados
+
+- BUY
+- SELL
+- REPO
+- REVERSE_REPO
+
+### Estados simulados
+
+- CAPTURED
+- VALIDATED
+- SETTLED
+- REJECTED
