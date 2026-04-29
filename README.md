@@ -96,3 +96,45 @@ GET /api/health
 - Accounting
 - Regulatory Reports
 - End of Day Position Report
+
+
+## Paso 1 - Health Check
+
+Endpoint disponible:
+
+```http
+GET /api/health
+```
+
+Respuesta esperada:
+
+```json
+{
+  "success": true,
+  "service": "CalypsoOps MX Backend",
+  "environment": "development",
+  "database": {
+    "status": "connected"
+  }
+}
+```
+
+## Postman
+
+Colección sugerida:
+
+```txt
+CalypsoOps MX API
+```
+
+Folder:
+
+```txt
+Health
+```
+
+Request:
+
+```txt
+GET Health Check
+```

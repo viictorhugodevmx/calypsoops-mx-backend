@@ -1,0 +1,30 @@
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+
+import healthRoutes from './modules/health/health.routes';
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
+
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'CalypsoOps MX API is running',
+    docs: '/api/health',
+  });
+});
+
+app.use('/api/health', healthRoutes);
+
+app.use((_req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found',
+  });
+});
+
+export default app;
