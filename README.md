@@ -1,0 +1,98 @@
+# CalypsoOps MX Backend
+
+Backend lab para simular una capa operativa alrededor de Calypso en contexto de Mercado de Dinero / Mercado de Deuda gubernamental mexicana.
+
+## Objetivo
+
+Simular APIs que podrían ser consumidas por un frontend Angular para consultar información relacionada con:
+
+- Instrumentos de deuda mexicana
+- Operaciones de mercado
+- Conciliación INDEVAL
+- Riesgos y límites
+- Logs de cumplimiento
+- Reportes operativos
+
+## Contexto del lab
+
+Este proyecto no consume Calypso real.
+
+La idea es simular una arquitectura parecida a la que podría existir en un banco:
+
+```txt
+Calypso / Proveedor / Middleware
+        ↓
+Backend API
+        ↓
+Angular Frontend
+        ↓
+Pantallas operativas
+```
+
+## Stack
+
+- Node.js 20.19.4
+- TypeScript 5.9.x
+- Express
+- MongoDB 6.0.20
+- Mongoose
+- Postman
+
+## Estructura inicial
+
+```txt
+backend/
+  postman/
+  src/
+    app.ts
+    server.ts
+    config/
+    modules/
+    seed/
+    shared/
+```
+
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm start
+npm run seed
+```
+
+## Variables de entorno
+
+Crear archivo `.env` con base en `.env.example`:
+
+```env
+PORT=4000
+MONGO_URI=mongodb://127.0.0.1:27017/calypsoops_mx
+NODE_ENV=development
+```
+
+## Health Check
+
+En el siguiente paso se habilitará:
+
+```http
+GET /api/health
+```
+
+## Módulos planeados
+
+### MVP
+
+- Health
+- Instruments
+- Trades
+- Reconciliation INDEVAL
+- Risk Limits
+- Compliance Logs
+
+### Fase posterior
+
+- Workbench
+- Accounting
+- Regulatory Reports
+- End of Day Position Report
