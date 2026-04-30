@@ -354,3 +354,41 @@ Evento operativo → Tarea → Revisión → Comentario → Resolución
 - IN_PROGRESS
 - RESOLVED
 - CANCELLED
+
+## Paso 8 - Reports
+
+Módulo para simular generación e historial de reportes operativos/regulatorios.
+
+### Endpoints
+
+```http
+POST /api/reports/seed/run
+POST /api/reports/generate
+GET /api/reports/history
+GET /api/reports/history?type=BANXICO_REPORT
+GET /api/reports/:id
+```
+
+### Tipos de reporte
+
+```txt
+BANXICO_REPORT
+EOD_POSITION
+INDEVAL_BREAKS
+RISK_BREACHES
+COMPLIANCE_LOGS
+```
+
+### Estados
+
+```txt
+PENDING
+GENERATED
+FAILED
+```
+
+### Concepto
+
+```txt
+Datos operativos + fecha de negocio + tipo de reporte = reporte generado
+```
