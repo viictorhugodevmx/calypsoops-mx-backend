@@ -317,3 +317,40 @@ CRITICAL
 - VALUE_DATE_VALIDATION
 - COLLATERAL_SUFFICIENCY
 - EQUIVALENT_RATING
+
+## Paso 7 - Workbench
+
+Módulo para simular un banco de trabajo operativo.
+
+### Endpoints
+
+```http
+POST /api/workbench/seed/run
+GET /api/workbench/tasks
+GET /api/workbench/tasks?status=OPEN
+GET /api/workbench/tasks?priority=CRITICAL
+GET /api/workbench/tasks/:id
+PATCH /api/workbench/tasks/:id/status
+POST /api/workbench/tasks/:id/comments
+```
+
+### Concepto
+
+```txt
+Evento operativo → Tarea → Revisión → Comentario → Resolución
+```
+
+### Tipos simulados
+
+- RECONCILIATION_BREAK
+- RISK_BREACH
+- COMPLIANCE_FAILED
+- REPORT_PENDING
+- BACK_OFFICE_REVIEW
+
+### Estados
+
+- OPEN
+- IN_PROGRESS
+- RESOLVED
+- CANCELLED
