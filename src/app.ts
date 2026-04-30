@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import healthRoutes from './modules/health/health.routes';
 import instrumentRoutes from './modules/instruments/instrument.routes';
 import tradeRoutes from './modules/trades/trade.routes';
+import reconciliationRoutes from './modules/reconciliation/reconciliation.routes';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get('/', (_req, res) => {
 app.use('/api/health', healthRoutes);
 app.use('/api/instruments', instrumentRoutes);
 app.use('/api/trades', tradeRoutes);
+app.use('/api/reconciliation', reconciliationRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({

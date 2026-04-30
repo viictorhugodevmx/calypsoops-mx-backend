@@ -202,3 +202,38 @@ GET /api/trades?search=Repo
 - VALIDATED
 - SETTLED
 - REJECTED
+
+## Paso 4 - Reconciliation INDEVAL
+
+Módulo para simular conciliación entre posiciones registradas en Calypso y posiciones reportadas por INDEVAL.
+
+### Endpoints
+
+```http
+POST /api/reconciliation/seed/run
+GET /api/reconciliation/positions
+GET /api/reconciliation/positions?source=CALYPSO
+GET /api/reconciliation/positions?source=INDEVAL
+POST /api/reconciliation/run
+GET /api/reconciliation/runs
+GET /api/reconciliation/runs/:id
+PATCH /api/reconciliation/breaks/:id/review
+```
+
+### Concepto
+
+```txt
+CALYPSO position - INDEVAL position = reconciliation difference
+```
+
+Si la diferencia es `0`, el resultado es:
+
+```txt
+MATCHED
+```
+
+Si existe diferencia:
+
+```txt
+BREAK
+```
