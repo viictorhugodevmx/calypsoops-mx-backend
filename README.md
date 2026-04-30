@@ -392,3 +392,37 @@ FAILED
 ```txt
 Datos operativos + fecha de negocio + tipo de reporte = reporte generado
 ```
+
+## Paso 9 - Global Seed
+
+Seed global para poblar todos los módulos principales del backend.
+
+### Comando
+
+```bash
+npm run seed
+```
+
+### Orden de ejecución
+
+```txt
+1. Instruments
+2. Trades
+3. Reconciliation Positions
+4. Risk Limits
+5. Compliance Logs
+6. Workbench Tasks
+7. Reports
+```
+
+### Validación rápida
+
+```http
+GET /api/instruments
+GET /api/trades
+GET /api/reconciliation/positions
+GET /api/risk/exposure
+GET /api/compliance/logs
+GET /api/workbench/tasks
+GET /api/reports/history
+```
