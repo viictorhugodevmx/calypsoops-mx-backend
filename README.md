@@ -271,3 +271,49 @@ BREACHED
 - INSTRUMENT_TYPE
 - COUNTERPARTY
 - DESK
+
+## Paso 6 - Compliance Logs
+
+Módulo para simular logs de reglas de cumplimiento aplicadas sobre trades.
+
+### Endpoints
+
+```http
+POST /api/compliance/seed/run
+GET /api/compliance/logs
+GET /api/compliance/logs?result=FAILED
+GET /api/compliance/logs?severity=CRITICAL
+GET /api/compliance/logs/:id
+GET /api/compliance/rules
+```
+
+### Concepto
+
+```txt
+Trade + Regla de cumplimiento = Compliance Log
+```
+
+### Resultados simulados
+
+```txt
+PASSED
+WARNING
+FAILED
+```
+
+### Severidades simuladas
+
+```txt
+LOW
+MEDIUM
+HIGH
+CRITICAL
+```
+
+### Reglas simuladas
+
+- NO_SHORT_SELL
+- COUNTERPARTY_LIMIT
+- VALUE_DATE_VALIDATION
+- COLLATERAL_SUFFICIENCY
+- EQUIVALENT_RATING

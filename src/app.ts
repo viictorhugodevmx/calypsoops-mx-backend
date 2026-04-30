@@ -7,6 +7,7 @@ import instrumentRoutes from './modules/instruments/instrument.routes';
 import tradeRoutes from './modules/trades/trade.routes';
 import reconciliationRoutes from './modules/reconciliation/reconciliation.routes';
 import riskRoutes from './modules/risk/risk.routes';
+import complianceRoutes from './modules/compliance/compliance.routes';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/instruments', instrumentRoutes);
 app.use('/api/trades', tradeRoutes);
 app.use('/api/reconciliation', reconciliationRoutes);
 app.use('/api/risk', riskRoutes);
+app.use('/api/compliance', complianceRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({
