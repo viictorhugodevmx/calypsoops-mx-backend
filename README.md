@@ -237,3 +237,37 @@ Si existe diferencia:
 ```txt
 BREAK
 ```
+
+## Paso 5 - Risk Limits
+
+Módulo para simular límites de riesgo sobre operaciones de mercado.
+
+### Endpoints
+
+```http
+POST /api/risk/seed/run
+GET /api/risk/limits
+GET /api/risk/exposure
+GET /api/risk/breaches
+```
+
+### Concepto
+
+```txt
+Exposición actual / Límite permitido = Porcentaje de uso
+```
+
+Estados:
+
+```txt
+OK
+WARNING
+BREACHED
+```
+
+### Tipos de límite
+
+- INSTRUMENT
+- INSTRUMENT_TYPE
+- COUNTERPARTY
+- DESK
