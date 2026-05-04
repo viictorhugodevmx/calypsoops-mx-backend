@@ -10,6 +10,7 @@ import riskRoutes from './modules/risk/risk.routes';
 import complianceRoutes from './modules/compliance/compliance.routes';
 import workbenchRoutes from './modules/workbench/workbench.routes';
 import reportRoutes from './modules/reports/report.routes';
+import dashboardRoutes from './modules/dashboard/dashboard.routes';
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/risk', riskRoutes);
 app.use('/api/compliance', complianceRoutes);
 app.use('/api/workbench', workbenchRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({

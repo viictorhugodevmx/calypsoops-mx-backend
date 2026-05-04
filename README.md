@@ -426,3 +426,27 @@ GET /api/compliance/logs
 GET /api/workbench/tasks
 GET /api/reports/history
 ```
+
+## Paso 10 - Dashboard Summary
+
+Endpoint para concentrar KPIs principales del backend.
+
+### Endpoint
+
+```http
+GET /api/dashboard/summary
+```
+
+### Incluye
+
+- Instrumentos activos
+- Trades por estado
+- Última conciliación INDEVAL
+- Límites de riesgo
+- Logs de cumplimiento fallidos/críticos
+- Tareas activas del Workbench
+- Reportes generados/pendientes
+
+### Uso en frontend
+
+Este endpoint alimentará la pantalla principal del dashboard Angular.
