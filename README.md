@@ -11,7 +11,9 @@ Simular APIs que podrían ser consumidas por un frontend Angular para consultar 
 - Conciliación INDEVAL
 - Riesgos y límites
 - Logs de cumplimiento
-- Reportes operativos
+- Banco de trabajo operativo
+- Reportes operativos/regulatorios
+- Dashboard consolidado
 
 ## Contexto del lab
 
@@ -38,7 +40,7 @@ Pantallas operativas
 - Mongoose
 - Postman
 
-## Estructura inicial
+## Estructura
 
 ```txt
 backend/
@@ -48,17 +50,23 @@ backend/
     server.ts
     config/
     modules/
+      health/
+      dashboard/
+      instruments/
+      trades/
+      reconciliation/
+      risk/
+      compliance/
+      workbench/
+      reports/
     seed/
     shared/
 ```
 
-## Scripts
+## Instalación
 
 ```bash
-npm run dev
-npm run build
-npm start
-npm run seed
+npm install
 ```
 
 ## Variables de entorno
@@ -71,143 +79,89 @@ MONGO_URI=mongodb://127.0.0.1:27017/calypsoops_mx
 NODE_ENV=development
 ```
 
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm start
+npm run seed
+```
+
+## Levantar MongoDB
+
+```bash
+sudo systemctl status mongod
+sudo systemctl start mongod
+```
+
+## Seed global
+
+```bash
+npm run seed
+```
+
+Orden de ejecución:
+
+```txt
+1. Instruments
+2. Trades
+3. Reconciliation Positions
+4. Risk Limits
+5. Compliance Logs
+6. Workbench Tasks
+7. Reports
+```
+
+## Levantar servidor
+
+```bash
+npm run dev
+```
+
+API local:
+
+```txt
+http://localhost:4000
+```
+
 ## Health Check
 
-En el siguiente paso se habilitará:
-
 ```http
 GET /api/health
 ```
 
-## Módulos planeados
-
-### MVP
-
-- Health
-- Instruments
-- Trades
-- Reconciliation INDEVAL
-- Risk Limits
-- Compliance Logs
-
-### Fase posterior
-
-- Workbench
-- Accounting
-- Regulatory Reports
-- End of Day Position Report
-
-
-## Paso 1 - Health Check
-
-Endpoint disponible:
+## Dashboard
 
 ```http
-GET /api/health
+GET /api/dashboard/summary
 ```
 
-Respuesta esperada:
-
-```json
-{
-  "success": true,
-  "service": "CalypsoOps MX Backend",
-  "environment": "development",
-  "database": {
-    "status": "connected"
-  }
-}
-```
-
-## Postman
-
-Colección sugerida:
-
-```txt
-CalypsoOps MX API
-```
-
-Folder:
-
-```txt
-Health
-```
-
-Request:
-
-```txt
-GET Health Check
-```
-
-## Paso 2 - Instruments
-
-Módulo para simular instrumentos de deuda mexicana usados en Mercado de Dinero / Mercado de Deuda.
-
-### Endpoints
+## Instruments
 
 ```http
 POST /api/instruments/seed/run
 GET /api/instruments
-GET /api/instruments/:id
-```
-
-### Filtros disponibles
-
-```http
 GET /api/instruments?type=CETES
 GET /api/instruments?status=ACTIVE
 GET /api/instruments?search=bono
+GET /api/instruments/:id
 ```
 
-### Instrumentos simulados
-
-- CETES
-- BONOS M
-- UDIBONOS
-- BONDES F
-- BPAs
-
-## Paso 3 - Trades
-
-Módulo para simular operaciones financieras realizadas sobre instrumentos de deuda mexicana.
-
-### Endpoints
+## Trades
 
 ```http
 POST /api/trades/seed/run
 GET /api/trades
-GET /api/trades/:id
-PATCH /api/trades/:id/status
-```
-
-### Filtros disponibles
-
-```http
 GET /api/trades?status=SETTLED
 GET /api/trades?type=REPO
 GET /api/trades?counterparty=Banco
 GET /api/trades?search=Repo
+GET /api/trades/:id
+PATCH /api/trades/:id/status
 ```
 
-### Tipos de operación simulados
-
-- BUY
-- SELL
-- REPO
-- REVERSE_REPO
-
-### Estados simulados
-
-- CAPTURED
-- VALIDATED
-- SETTLED
-- REJECTED
-
-## Paso 4 - Reconciliation INDEVAL
-
-Módulo para simular conciliación entre posiciones registradas en Calypso y posiciones reportadas por INDEVAL.
-
-### Endpoints
+## Reconciliation INDEVAL
 
 ```http
 POST /api/reconciliation/seed/run
@@ -220,29 +174,7 @@ GET /api/reconciliation/runs/:id
 PATCH /api/reconciliation/breaks/:id/review
 ```
 
-### Concepto
-
-```txt
-CALYPSO position - INDEVAL position = reconciliation difference
-```
-
-Si la diferencia es `0`, el resultado es:
-
-```txt
-MATCHED
-```
-
-Si existe diferencia:
-
-```txt
-BREAK
-```
-
-## Paso 5 - Risk Limits
-
-Módulo para simular límites de riesgo sobre operaciones de mercado.
-
-### Endpoints
+## Risk Limits
 
 ```http
 POST /api/risk/seed/run
@@ -251,32 +183,7 @@ GET /api/risk/exposure
 GET /api/risk/breaches
 ```
 
-### Concepto
-
-```txt
-Exposición actual / Límite permitido = Porcentaje de uso
-```
-
-Estados:
-
-```txt
-OK
-WARNING
-BREACHED
-```
-
-### Tipos de límite
-
-- INSTRUMENT
-- INSTRUMENT_TYPE
-- COUNTERPARTY
-- DESK
-
-## Paso 6 - Compliance Logs
-
-Módulo para simular logs de reglas de cumplimiento aplicadas sobre trades.
-
-### Endpoints
+## Compliance Logs
 
 ```http
 POST /api/compliance/seed/run
@@ -287,42 +194,7 @@ GET /api/compliance/logs/:id
 GET /api/compliance/rules
 ```
 
-### Concepto
-
-```txt
-Trade + Regla de cumplimiento = Compliance Log
-```
-
-### Resultados simulados
-
-```txt
-PASSED
-WARNING
-FAILED
-```
-
-### Severidades simuladas
-
-```txt
-LOW
-MEDIUM
-HIGH
-CRITICAL
-```
-
-### Reglas simuladas
-
-- NO_SHORT_SELL
-- COUNTERPARTY_LIMIT
-- VALUE_DATE_VALIDATION
-- COLLATERAL_SUFFICIENCY
-- EQUIVALENT_RATING
-
-## Paso 7 - Workbench
-
-Módulo para simular un banco de trabajo operativo.
-
-### Endpoints
+## Workbench
 
 ```http
 POST /api/workbench/seed/run
@@ -334,32 +206,7 @@ PATCH /api/workbench/tasks/:id/status
 POST /api/workbench/tasks/:id/comments
 ```
 
-### Concepto
-
-```txt
-Evento operativo → Tarea → Revisión → Comentario → Resolución
-```
-
-### Tipos simulados
-
-- RECONCILIATION_BREAK
-- RISK_BREACH
-- COMPLIANCE_FAILED
-- REPORT_PENDING
-- BACK_OFFICE_REVIEW
-
-### Estados
-
-- OPEN
-- IN_PROGRESS
-- RESOLVED
-- CANCELLED
-
-## Paso 8 - Reports
-
-Módulo para simular generación e historial de reportes operativos/regulatorios.
-
-### Endpoints
+## Reports
 
 ```http
 POST /api/reports/seed/run
@@ -369,84 +216,31 @@ GET /api/reports/history?type=BANXICO_REPORT
 GET /api/reports/:id
 ```
 
-### Tipos de reporte
+## Postman
+
+Archivos esperados:
 
 ```txt
-BANXICO_REPORT
-EOD_POSITION
-INDEVAL_BREAKS
-RISK_BREACHES
-COMPLIANCE_LOGS
+postman/
+  CalypsoOps-MX-API.postman_collection.json
+  CalypsoOps-MX-Local.postman_environment.json
 ```
 
-### Estados
+Environment sugerido:
 
 ```txt
-PENDING
-GENERATED
-FAILED
+baseUrl = http://localhost:4000
 ```
 
-### Concepto
+## Concepto financiero del lab
+
+Este backend simula una capa intermedia que podría recibir, procesar o exponer información relacionada con Calypso, INDEVAL, Banxico, Riesgos, Cumplimiento y Back Office.
+
+En un escenario real:
 
 ```txt
-Datos operativos + fecha de negocio + tipo de reporte = reporte generado
+Proveedor / Middleware integra datos financieros
+Backend expone contratos
+Frontend Angular consume APIs
+Usuario operativo valida, consulta o gestiona información
 ```
-
-## Paso 9 - Global Seed
-
-Seed global para poblar todos los módulos principales del backend.
-
-### Comando
-
-```bash
-npm run seed
-```
-
-### Orden de ejecución
-
-```txt
-1. Instruments
-2. Trades
-3. Reconciliation Positions
-4. Risk Limits
-5. Compliance Logs
-6. Workbench Tasks
-7. Reports
-```
-
-### Validación rápida
-
-```http
-GET /api/instruments
-GET /api/trades
-GET /api/reconciliation/positions
-GET /api/risk/exposure
-GET /api/compliance/logs
-GET /api/workbench/tasks
-GET /api/reports/history
-```
-
-## Paso 10 - Dashboard Summary
-
-Endpoint para concentrar KPIs principales del backend.
-
-### Endpoint
-
-```http
-GET /api/dashboard/summary
-```
-
-### Incluye
-
-- Instrumentos activos
-- Trades por estado
-- Última conciliación INDEVAL
-- Límites de riesgo
-- Logs de cumplimiento fallidos/críticos
-- Tareas activas del Workbench
-- Reportes generados/pendientes
-
-### Uso en frontend
-
-Este endpoint alimentará la pantalla principal del dashboard Angular.
